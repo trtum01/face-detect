@@ -2,7 +2,7 @@ module Face
   module Client
     module Recognition
       def faces_detect(opts={})
-        opts.assert_valid_keys(:urls, :file, :detector, :attributes, :callback, :callback_url)
+        opts.assert_valid_keys(:urls, :file, :detector, :attributes, :callback, :callback_url, :detect_all_feature_points)
         make_request(:faces_detect, opts)
       end
 
