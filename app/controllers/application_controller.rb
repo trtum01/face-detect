@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
 
     client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
 
-    original_output = client.faces_detect(urls: [image_source] , attributes: 'all', detect_all_feature_points: 'true')
+    original_output = client.faces_detect(urls: [image_source] , attributes: 'all')
 
     begin
       # face_status_face = original_output['photos'].first['tags'].first['attributes']['yaw']

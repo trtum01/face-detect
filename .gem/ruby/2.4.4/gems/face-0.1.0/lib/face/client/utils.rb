@@ -24,7 +24,12 @@ module Face
         { :api_key => api_key, :api_secret => api_secret }
       end
 
+      def default_options
+        { detect_all_feature_points: 'true' }
+      end
+
       def make_request(api_method, opts={})
+
         if opts[:urls].is_a? Array
           opts[:urls] = opts[:urls].join(',')
         end
@@ -41,7 +46,7 @@ module Face
           opts[:pids] = opts[:pids].join(',')
         end
         
-        response = JSON.parse( RestClient.post(API_METHODS[ api_method ], opts.merge(api_crendential)).body )
+        response = JSON.parse( RestClient.post(API_METHODS[ api_method ], opts.merge(api_crendential).merge(default_options)).body )
         if %w/success partial/.include?(response['status'])
           response
         elsif response['status'] == 'failure'
