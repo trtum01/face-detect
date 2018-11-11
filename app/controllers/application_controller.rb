@@ -63,8 +63,22 @@ class ApplicationController < ActionController::Base
 
   end
 
-  def face_recog
+  def face_recog(image_source)
 
+    client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
+
+    original_output = client.faces_recognize(uids: 'all' , urls: [image_source] , namespace: 'testperson' , attributes: 'all')
+
+    begin
+
+      face_status_s = original_output['photos'].first
+
+    rescue  Exception => error
+
+      face_status_s = "error"
+
+    end
+    face_status_s
   end
 
 end

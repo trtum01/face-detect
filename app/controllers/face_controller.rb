@@ -9,6 +9,7 @@ class FaceController < ApplicationController
       @face_shape = drawing_face(@face_status)
 
       @face_size = face_size(@image_source)
+      @face_recog = face_recog(@image_source)
     end
   end
 
