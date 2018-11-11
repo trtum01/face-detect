@@ -63,4 +63,8 @@ class ApplicationController < ActionController::Base
 
   end
 
+  def face_recog
+
+  end
+
 end
