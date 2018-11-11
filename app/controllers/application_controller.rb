@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
 
     client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
 
-    original_output = client.faces_recognize(uids: 'all' , urls: [image_source] , namespace: 'testperson' , attributes: 'all')
+    original_output = client.faces_recognize(uids: 'all' , urls: [image_source] , namespaces: 'testperson' , attributes: 'all')
 
     begin
 
