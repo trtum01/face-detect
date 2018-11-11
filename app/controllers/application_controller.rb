@@ -34,14 +34,10 @@ class ApplicationController < ActionController::Base
   def face_status(image_source)
 
     client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
-
     original_output = client.faces_detect(urls: [image_source] , attributes: 'all')
 
     begin
-      # face_status_face = original_output['photos'].first['tags'].first['attributes']['yaw']
-      # # mood = face_status_face['value']
       face_status_s = original_output['photos'].first['tags'].first['points']
-
     rescue  Exception => error
       face_status_s = "error"
     end
@@ -66,7 +62,5 @@ class ApplicationController < ActionController::Base
     face_status_s
 
   end
-
-
 
 end

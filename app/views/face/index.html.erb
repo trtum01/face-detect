@@ -23,12 +23,13 @@
   <div id="image_wrapper" class="image_wrapper">
     <%= image_tag(@image_source) %>
     <div class="paint_points">
-      <span class="point_custom"></span>
-      <% @face_status.each do |position| %>
+      <% @face_shape.each do |position| %>
         <%= content_tag(:span, nil, class: "point-custom", style: "top: #{position['y']/100*@face_size['height']}px; left: #{position['x']/100*@face_size['width']}px;") %>
       <% end %>
     </div>
   </div>
-  <%#= @face_status %>
-
+  <%# @face_shape.each do |position| %>
+<!--    <%#= content_tag(:span, "point id #{position['id']} / confidence: #{position['confidence']} / x = #{(position['x']/100*@face_size['width']).round(2)} / y = #{(position['y']/100*@face_size['height']).round(2)}") %><br>-->
+  <%# end %>
+  <%= @face_size %>
 <% end %>
