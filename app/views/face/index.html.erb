@@ -1,11 +1,5 @@
 <div class="header-custom">Face Recognize : ใช่หรือเปล่า?</div>
 
-<%#= form_tag("/face", method: "get") do %>
-  <%#= label_tag(:train_image_url, "Image URL") %>
-  <%#= text_field_tag(:train_image_url, @train_image_source, size: 100) %>
-  <%#= submit_tag("Train") %>
-<%# end %>
-<%#= @save_tags %>
 <%= form_tag("/face", class: "image-detect", method: "get") do %>
   <%= label_tag(:image_url, "Image URL") %>
   <%= text_field_tag(:image_url, @image_source, size: 100, class: "image-detect") %>
@@ -13,29 +7,13 @@
 <% end %>
 
 
-<!--<p>Sample pictures (click to pre-populate textbox above)</p>-->
-<!--<ul>-->
-<!--  <li><a hef="#" onClick="document.getElementById('image_url').value = 'http://www.edrants.com/wp-content/uploads/2013/03/googleglassimage.jpg';">person wearing google glass</a></li>-->
-<!--  <li><a hef="#" onClick="document.getElementById('image_url').value = 'http://www.atlantatrails.com/images/high-shoals-falls-waterfall/4-high-shoals-falls-trail-blue-hole-waterfall.jpg';">waterfall</a></li>-->
-<!--</ul>-->
-
-
 <% if @image_source %>
   <hr />
   <div class="text-wrapper">
     <%= label_tag("Percent Match = #{@result}%", nil, class: 'result-text') %>
   </div>
-<!--  <br />Face detected: <%#= @face_detected %>-->
-<!--  <br />Image URL: <%#= @image_source %>-->
+
   <div id="image_wrapper" class="image_wrapper">
     <%= image_tag(@image_source) %>
-<!--    <div class="paint_points">-->
-      <%# @face_shape.each do |position| %>
-        <%#= content_tag(:span, nil, class: "point-custom", style: "top: #{position['y']/100*@face_size['height']}px; left: #{position['x']/100*@face_size['width']}px;") %>
-      <%# end %>
-<!--    </div>-->
   </div>
-  <%# @face_shape.each do |position| %>
-<!--    <%#= content_tag(:span, "point id #{position['id']} / confidence: #{position['confidence']} / x = #{(position['x']/100*@face_size['width']).round(2)} / y = #{(position['y']/100*@face_size['height']).round(2)}") %><br>-->
-  <%# end %>
 <% end %>
