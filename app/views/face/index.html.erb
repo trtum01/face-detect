@@ -1,19 +1,44 @@
 <div class="header-custom">Face Recognize : ใช่หรือเปล่า?</div>
 
+<!--Chaeyon-->
 <%= form_tag("/face", class: "image-detect", method: "get") do %>
-  <%= label_tag(:image_url, "Image URL") %>
+  <%= label_tag(:train_image_url_1, "ภาพเทรน Chaeyeon") %>
+  <%= text_field_tag(:train_image_url_1, @train_image_source_1, size: 100, class: "image-detect") %>
+  <%= submit_tag("Train") %>
+<% end %>
+<%= @save_tags %>
+<!--Minhyon-->
+<%= form_tag("/face", class: "image-detect", method: "get") do %>
+  <%= label_tag(:train_image_url_2, "ภาพเทรน Minhyon") %>
+  <%= text_field_tag(:train_image_url_2, @train_image_source_2, size: 100, class: "image-detect") %>
+  <%= submit_tag("Train") %>
+<% end %>
+<%= @save_tags %>
+<!--JB-->
+<%= form_tag("/face", class: "image-detect", method: "get") do %>
+  <%= label_tag(:train_image_url_3, "ภาพเทรน JB") %>
+  <%= text_field_tag(:train_image_url_3, @train_image_source_3, size: 100, class: "image-detect") %>
+  <%= submit_tag("Train") %>
+<% end %>
+<%= @save_tags %>
+<br><br>
+<%= form_tag("/face", class: "image-detect", method: "get") do %>
+  <%= label_tag(:image_url, "ภาพทดสอบ") %>
   <%= text_field_tag(:image_url, @image_source, size: 100, class: "image-detect") %>
   <%= submit_tag("Detect") %>
 <% end %>
-
 
 <% if @image_source %>
   <hr />
   <div class="text-wrapper">
     <%= label_tag("Percent Match = #{@result}%", nil, class: 'result-text') %>
   </div>
-
   <div id="image_wrapper" class="image_wrapper">
     <%= image_tag(@image_source) %>
+<!--    <div class="paint_points">-->
+      <%# @face_shape.each do |position| %>
+        <%#= content_tag(:span, nil, class: "point-custom", style: "top: #{position['y']/100*@face_size['height']}px; left: #{position['x']/100*@face_size['width']}px;") %>
+      <%# end %>
+<!--    </div>-->
   </div>
 <% end %>
