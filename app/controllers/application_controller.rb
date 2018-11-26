@@ -111,7 +111,7 @@ class ApplicationController < ActionController::Base
   def recognize_face(image_source)
 
     client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
-    original_out = client.faces_recognize(uids: "test1@testperson2", urls: [image_source])
+    original_out = client.faces_recognize(uids: "pic1@testperson2", urls: [image_source])
 
     begin
 
