@@ -62,23 +62,32 @@ class ApplicationController < ActionController::Base
 
   end
 
-  def face_train(tid,picture)
+  def face_train(tid)
 
     client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
     begin
 
-      save_tags = client.tags_save(uid: [picture] , tids: [tid])
-      uids = client.faces_train(uids: [picture])
+      save_tags = client.tags_save(uid: "pic1@testperson2" , tids: [tid])
+      uids = client.faces_train(uids: "pic1@testperson2")
 
       # face_training = client.faces_train(uid: )
-      train_result = uids
+      train_result = uids['status']
     rescue Exception => error
 
       # save_tags = "error tids"
-      uids = "Error"
+      train_result = "Error"
     end
-    # save_tags
-    uids
+    train_result
+  end
+
+  def remove_tags(tid)
+    client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
+    begin
+      rm_tags = client.tags_remove(tids: [tid])
+    rescue Exception => error
+      rm_tags = "Error"
+    end
+    rm_tags
   end
 
   def face_recog(image_source)

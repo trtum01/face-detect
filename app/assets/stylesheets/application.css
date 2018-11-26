@@ -51,8 +51,15 @@
 
 .image-detect {
     margin-top: 5px;
+    text-align: center;
     font-family: "TH Sarabun New";
     font-size: 28px;
+}
+.image-detect-train{
+    margin-top: 5px;
+    font-family: "TH Sarabun New";
+    font-size: 28px;
+
 }
 
 .text-wrapper {
