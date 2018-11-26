@@ -9,7 +9,13 @@ class FaceController < ApplicationController
       @face_shape = drawing_face(@face_status)
 
       @face_size = face_size(@image_source)
-      @face_recog = face_recog(@image_source)
+      @result = recognize_face(@image_source)
+    end
+
+    if params[:train_image_url]
+      @train_image_source = params[:train_image_url]
+      @traimid = face_recog(@train_image_source)
+      @save_tags = face_train(@traimid)
     end
   end
 

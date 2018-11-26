@@ -17,6 +17,7 @@
 .image_wrapper {
     position: relative;
     display: inline-block;
+    text-align: center;
     width: 100%;
 }
 
@@ -38,4 +39,31 @@
     border: 1px solid #e4d00a;
     margin: -2px 0 0 -2px;
     font-size: 0;
+}
+
+.header-custom {
+    font-family: "TH Sarabun New";
+    text-align: center;
+    font-weight: bold;
+    color: red;
+    font-size: 40px;
+}
+
+.image-detect {
+    font-family: "TH Sarabun New";
+    text-align: center;
+    font-size: 28px;
+}
+
+.text-wrapper {
+    text-align: center;
+    background: lightskyblue;
+    border: gray solid 15px;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+.result-text {
+    font-family: "TH Sarabun New";
+    font-size: 32px;
 }

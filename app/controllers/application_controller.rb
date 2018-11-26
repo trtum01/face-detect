@@ -49,7 +49,6 @@ class ApplicationController < ActionController::Base
   def face_size(image_source)
 
     client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
-
     original_output = client.faces_detect(urls: [image_source] , attributes: 'all')
 
     begin
@@ -63,22 +62,58 @@ class ApplicationController < ActionController::Base
 
   end
 
+  def face_train(tid)
+
+    client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
+    begin
+
+      save_tags = client.tags_save(uid: "test1@testperson2" , tids: [tid])
+      uids = client.faces_train(uids: "test1@testperson2")
+
+      # face_training = client.faces_train(uid: )
+
+    rescue Exception => error
+
+      # save_tags = "error tids"
+      uids = "error"
+    end
+    # save_tags
+    uids
+  end
+
   def face_recog(image_source)
 
     client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
-
-    original_output = client.faces_recognize(uids: 'all' , urls: [image_source] , namespace: 'testperson' , attributes: 'all')
+    original_output = client.faces_detect(urls: [image_source]  , attributes: 'all')
 
     begin
 
-      face_status_s = original_output['photos'].first
+      trainid = original_output['photos'].first['tags'].first['tid']
 
     rescue  Exception => error
 
-      face_status_s = "error"
+      trainid = "error tid"
+      save_tag = "error tags"
 
     end
-    face_status_s
+    trainid
+  end
+
+  def recognize_face(image_source)
+
+    client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
+    original_out = client.faces_recognize(uids: "test1@testperson2", urls: [image_source])
+
+    begin
+
+      result = original_out['photos'].first['tags'].first['uids'].first['confidence']
+
+    rescue  Exception => error
+
+      result = "error"
+
+    end
+    result
   end
 
 end
