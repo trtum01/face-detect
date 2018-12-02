@@ -5,50 +5,48 @@ class ApplicationController < ActionController::Base
 
   def face_status_points(image_source)
     begin
-      face_status_s = api_key_detect(image_source)['photos'].first['tags'].first['points']
+      result = api_key_detect(image_source)['photos'].first['tags'].first['points']
     rescue  Exception => error
-      face_status_s = "error"
+      result = "Error at face_status_points"
     end
-    face_status_s
+    result
   end
 
-  def face_size(image_source)
+  def face_detail(image_source)
     begin
-      face_status_s = api_key_detect(image_source)['photos'].first
+      result = api_key_detect(image_source)['photos'].first
     rescue  Exception => error
-      face_status_s = "error"
+      result = "Error at face_detail"
     end
-    face_status_s
+    result
   end
 
-  def face_train(tid)
-    begin
-      save_tags = api_key_train.tags_save(uid: "pic1@testperson2" , tids: [tid])
-      uids = api_client.faces_train(uids: "pic1@testperson2")
-      train_result = uids['status']
-    rescue Exception => error
-      train_result = "Error"
-    end
-    train_result
-  end
-
-  def remove_tags(tid)
-    begin
-      rm_tags = api_key_train.tags_remove(tids: [tid])
-    rescue Exception => error
-      rm_tags = "Error"
-    end
-    rm_tags
-  end
-
-  def face_recog(image_source)
+  def get_tid(image_source)
     begin
       trainid = api_key_detect(image_source)['photos'].first['tags'].first['tid']
     rescue  Exception => error
       trainid = "error tid"
-      save_tag = "error tags"
     end
     trainid
+  end
+
+  def face_train(tid)
+    begin
+      api_key.tags_save(uid: "pic1@testperson2" , tids: [tid])
+      uids = api_key_train['status']
+    rescue Exception => error
+      uids = "Error"
+    end
+    uids
+  end
+
+  def remove_tags(tid)
+    begin
+      rm_tags = api_key.tags_remove(tids: [tid])
+    rescue Exception => error
+      rm_tags = "Error"
+    end
+    rm_tags
   end
 
   def recognize_face(image_source)
@@ -62,18 +60,20 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def api_key_detect(image_source)
+  def api_key
     client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
-    original_output = client.faces_detect(urls: [image_source])
   end
 
-  def api_key_train
-    client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
+  def api_key_detect(image_source)
+    original_output = api_key.faces_detect(urls: [image_source])
   end
 
   def api_key_recognize(image_source)
-    client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
-    original_out = client.faces_recognize(uids: "pic1@testperson2", urls: [image_source])
+    original_output = api_key.faces_recognize(uids: "pic1@testperson2", urls: [image_source])
+  end
+
+  def api_key_train
+    original_output = api_key.faces_train(uids: "pic1@testperson2")
   end
 
 end

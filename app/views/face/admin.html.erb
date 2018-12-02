@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<%= form_tag("/admin", class: "image-detect", method: "get") do %>
+  <%= label_tag(:image_url, "หน้ากลม") %>
+  <%= text_field_tag(:image_url, @image_source, size: 100, class: "image-detect") %>
+  <%= submit_tag("Detect") %>
+<% end %>
+<%= @image_url %>
+</body>
+</html>
