@@ -1,5 +1,8 @@
 class FaceController < ApplicationController
   require 'uri'
+  require "google_drive"
+  @session = GoogleDrive::Session.from_config("config.json")
+
   def index
 
     if params[:train_image_url_1]

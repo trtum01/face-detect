@@ -62,3 +62,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "face", git: "https://github.com/trtum01/face.git"
+
+gem 'google_drive'
