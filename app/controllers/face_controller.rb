@@ -45,7 +45,6 @@ class FaceController < ApplicationController
       diff_degree << (degree[0].abs - degree[1].abs).round.abs
     end
 
-    # diff_degree
     format_shape(diff_degree,calculate_line,wide_face,long_face)
   end
 
@@ -56,17 +55,17 @@ class FaceController < ApplicationController
 
   def format_shape(diff_degree,cal_line,wide,long)
     format_shape = ""
-    wide = Math.sqrt(((wide[0]['x'].to_i - wide[1]['x'].to_i)**2) + ((wide[0]['y'].to_i - wide[1]['y'].to_i)**2))
-    long = Math.sqrt(((long[0]['x'].to_i - long[1]['x'].to_i)**2) + ((long[0]['y'].to_i - long[1]['y'].to_i)**2))
+    wide_f = Math.sqrt(((wide[0]['x'].to_i*@face_size['width']/100 - wide[1]['x'].to_i*@face_size['width']/100)**2) + ((wide[0]['y'].to_i*@face_size['height']/100 - wide[1]['y'].to_i*@face_size['height']/100)**2))
+    long_f = Math.sqrt(((long[0]['x'].to_i*@face_size['width']/100 - long[1]['x'].to_i*@face_size['width']/100)**2) + ((long[0]['y'].to_i*@face_size['height']/100 - long[1]['y'].to_i*@face_size['height']/100)**2))
 
     if diff_degree[3] <= diff_degree[6]
       if diff_degree[1] + diff_degree[2] >= diff_degree[4] + diff_degree[5]
-        format_face = "Triangle"
+        format_face = "triangle"
         if diff_degree[6] - diff_degree[3] >= 8
-          format_face = "Triangle"
+          format_face = "triangle"
         elsif (diff_degree[2] - diff_degree[4]).abs <= 4
           if (diff_degree[1] - diff_degree[5]).abs <= 4
-            if wide/long < 1/2
+            if wide_f/long_f < 0.75
               format_face = "oval"
             else
               format_face = "circle"
@@ -74,16 +73,16 @@ class FaceController < ApplicationController
           end
         end
       elsif diff_degree[6] - diff_degree[3] >= 8
-        format_face = "Triangle"
+        format_face = "triangle"
       elsif (diff_degree[2] - diff_degree[4]).abs <= 4 || (diff_degree[1] - diff_degree[5]).abs <= 4
-        if wide/long < 1/2
+        if wide_f/long_f < 0.75
           format_face = "oval"
         else
           format_face = "circle"
         end
       end
     elsif diff_degree[3] >= 20
-        if wide/long < 1/2
+        if wide_f/long_f < 0.75
           format_face = "rectangle"
         else
           format_face = "square"
@@ -92,7 +91,7 @@ class FaceController < ApplicationController
         if (diff_degree[3] - diff_degree[6] > 4)
           if (diff_degree[2] - diff_degree[4]).abs <= 4
             if(diff_degree[1] - diff_degree[5]).abs <= 4
-              if wide/long < 1/2
+              if wide_f/long_f < 0.75
                 format_face = "oval"
               else
                 format_face = "circle"
@@ -103,7 +102,7 @@ class FaceController < ApplicationController
       end
       if diff_degree[3] - diff_degree[6] >= 8
         if (diff_degree[2] - diff_degree[4]).abs <= 4 || (diff_degree[1] - diff_degree[5]).abs <= 4
-          if wide/long < 1/2
+          if wide_f/long_f < 0.75
             format_face = "oval"
           else
             format_face = "circle"
@@ -111,7 +110,7 @@ class FaceController < ApplicationController
         end
       end
     elsif (diff_degree[2] - diff_degree[4]).abs <= 4 || (diff_degree[1] - diff_degree[5]).abs <= 4
-      if wide/long < 1/2
+      if wide/long < 0.75
         format_face = "oval"
       else
         format_face = "circle"
@@ -120,6 +119,25 @@ class FaceController < ApplicationController
       format_face = "unknown"
     end
 
-    format_face
+    information_shape(format_face)
   end
+
+  def information_shape(format_shape)
+    case format_shape
+    when "circle"
+      info = "คนธาตุน้ำ คือบุคคลที่มีลักษณะรูปหน้าทรงกลม อุปนิสัยโดยทั่วไปจะเป็นคนที่มีอารมณ์อ่อนไหว ฉลาดทันคน รักความสบาย ชอบเข้าสังคม มีเพื่อนฝูงมากมาย เป็นคนประนีประนอม อะลุ่มอล่วย ขาดความเด็ดขาด ปรับตัวเข้าหาผู้อื่นได้ดี รักงานด้านบริการหรือติดต่อประสานงาน เหมาะเป็นนักประสานประโยชน์ หรือผู้ช่วยระดับบริหาร"
+    when "oval"
+      info = "คนธาตุดิน คือบุคคลที่มีรูปหน้าทรงรีหรือรูปไข่ อุปนิสัยโดยทั่วไปจะเป็นคนพูดจาตรงไปตรงมา มั่นคงหนักแน่น ชอบทำมากกว่าพูด ขยัน ซื่อสัตย์ รักษาระเบียบ ไม่ชอบเสี่ยงทำธุรกิจหรืองานใหญ่ที่ ไม่มีความแน่นอน เหมาะที่จะเป็นพนักงานฝ่ายปฏิบัติการ"
+    when "square"
+      info = "คนธาตุทอง คือบุคคลที่มีลักษณะรูปหน้าเหลี่ยมจัตุรัสอุปนิสัยโดยทั่วไปจะเป็นคนที่มีความเป็นผู้นำ มีวิสัยทัศน์มองการณ์ไกล ฉลาด สุขุม มีเหตุผล กล้าคิดกล้าทำ กล้าตัดสินใจ และกล้ารับผิดชอบ เหมาะที่จะเป็นนักบริหาร วางนโยบาย วางแผน"
+    when "rectangle"
+      info = "คนธาตุไม้ คือบุคคลที่มีรูปหน้าสี่เหลี่ยมผืนผ้า อุปนิสัยโดยทั่วไปจะเป็นคนที่โกรธง่ายหายเร็ว ใจดีมีเมตตา มีวิสัยทัศน์กว้างไกล มีวาทศิลป์ในการพูด รอบรู้หลายเรื่อง ฉลาดทันคน ถนัดด้านการเรียนการสอน หรือเป็นที่ปรึกษาวางแผน บุคคลแบบนี้เหมาะที่จะเป็นนักคิด นักวิชาการ นักวิเคราะห์"
+    when "triangle"
+      info = "คนธาตุไฟ คือบุคคลที่มีรูปหน้าแบบสามเหลี่ยมหรือคางเรียวแหลม อุปนิสัยโดยทั่วไปจะมีความคล่องแคล่วว่องไว ทะเยอทะยาน ชอบผจญภัย มุทะลุวู่วาม มีจินตนาการและมีอุดมคติสูง ชอบค้นคว้าหาเหตุผล เรียนเก่งเรียนรู้ไว บุคคล แบบนี้เหมาะที่จะเป็นนักตรวจสอบ หรือหัวหน้างานระดับกลางๆ"
+    else
+      info = "ไม่ทราบใบหน้า อาจเกิดจากปัจจัยหลายอย่างหลาย ทำให้วิเคราะห์ไม่ได้"
+    end
+    info
+  end
+
 end
