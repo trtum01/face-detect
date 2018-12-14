@@ -12,6 +12,7 @@ class FaceController < ApplicationController
           @result = analyzing_face(@face_shape, @headbuttx, @headbutty)
         end
       end
+    #Merge
   end
 
   private
