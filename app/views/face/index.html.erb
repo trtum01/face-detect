@@ -8,7 +8,7 @@
 <% end %>
 
 <% if @image_source %>
-  <div id="image_wrapper" class="image_wrapper">
+  <br><div id="image_wrapper" class="image_wrapper">
     <%= image_tag(@image_source, id: 'img-source') %>
   </div>
   <%= form_tag("/face", class: "image-detect", method: "get") do %>

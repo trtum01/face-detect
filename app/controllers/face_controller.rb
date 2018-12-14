@@ -5,12 +5,11 @@ class FaceController < ApplicationController
         if params[:coords_x]
           @headbuttx = params[:coords_x]
           @headbutty = params[:coords_y]
+          @face_size = face_size(@image_source)
 
           @face_status = face_status_points(@image_source)
           @face_shape = drawing_face(@face_status)
           @result = analyzing_face(@face_shape, @headbuttx, @headbutty)
-
-          @face_size = face_size(@image_source)
         end
       end
   end
@@ -29,7 +28,7 @@ class FaceController < ApplicationController
     calculate_line = []
     wide_face = []
     diff_degree = []
-    head = { "x" => x, "y" => y, "confidence" => 100, "id" => 1041}
+    head = { "x" => x.to_i*100/@face_size['width'], "y" => y.to_i*100/@face_size['height'], "confidence" => 100, "id" => 1041}
     long_face = []
     long_face << head
 
@@ -39,7 +38,7 @@ class FaceController < ApplicationController
 
     face_shape.each do |position|
       wide_face << position if position['id'].to_i == 1024 || position['id'].to_i == 1040
-      long_face << position if position['id'].to_i == 1031
+      long_face << position if position['id'].to_i == 1032
     end
 
     calculate_line.each_cons(2) do |degree|
@@ -67,36 +66,36 @@ class FaceController < ApplicationController
           format_face = "Triangle"
         elsif (diff_degree[2] - diff_degree[4]).abs <= 4
           if (diff_degree[1] - diff_degree[5]).abs <= 4
-            if wide/long > 2/3
-              format_face = "oval" + wide.to_s + long.to_s
+            if wide/long < 1/2
+              format_face = "oval"
             else
-              format_face = "circle" + wide.to_s + long.to_s
+              format_face = "circle"
             end
           end
         end
       elsif diff_degree[6] - diff_degree[3] >= 8
         format_face = "Triangle"
       elsif (diff_degree[2] - diff_degree[4]).abs <= 4 || (diff_degree[1] - diff_degree[5]).abs <= 4
-        if wide/long > 2/3
-          format_face = "oval" + wide.to_s + long.to_s
+        if wide/long < 1/2
+          format_face = "oval"
         else
-          format_face = "circle" + wide.to_s + long.to_s
+          format_face = "circle"
         end
       end
     elsif diff_degree[3] >= 20
-      if wide/long > 2/3
-        format_face = "rectangle"
-      else
-        format_face = "square"
-      end
+        if wide/long < 1/2
+          format_face = "rectangle"
+        else
+          format_face = "square"
+        end
       if cal_line[0] > 80.5
         if (diff_degree[3] - diff_degree[6] > 4)
           if (diff_degree[2] - diff_degree[4]).abs <= 4
             if(diff_degree[1] - diff_degree[5]).abs <= 4
-              if wide/long > 2/3
-                format_face = "oval" + wide.to_s + long.to_s
+              if wide/long < 1/2
+                format_face = "oval"
               else
-                format_face = "circle" + wide.to_s + long.to_s
+                format_face = "circle"
               end
             end
           end
@@ -104,18 +103,18 @@ class FaceController < ApplicationController
       end
       if diff_degree[3] - diff_degree[6] >= 8
         if (diff_degree[2] - diff_degree[4]).abs <= 4 || (diff_degree[1] - diff_degree[5]).abs <= 4
-          if wide/long > 2/3
-            format_face = "oval" + wide.to_s + long.to_s
+          if wide/long < 1/2
+            format_face = "oval"
           else
-            format_face = "circle" + wide.to_s + long.to_s
+            format_face = "circle"
           end
         end
       end
     elsif (diff_degree[2] - diff_degree[4]).abs <= 4 || (diff_degree[1] - diff_degree[5]).abs <= 4
-      if wide/long > 2/3
-        format_face = "oval" + wide.to_s + long.to_s
+      if wide/long < 1/2
+        format_face = "oval"
       else
-        format_face = "circle" + wide.to_s + long.to_s
+        format_face = "circle"
       end
     else
       format_face = "unknown"
