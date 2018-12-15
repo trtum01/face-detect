@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>FaceDetect</title>
+    <meta charset="UTF-8">
+    <title>Personality Analysis using Face Detection</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -15,32 +16,38 @@
     <div class="container">
       <%= yield %>
     </div>
+    <script>
+        $('#img-source').mousemove(function(event) {
+            window.current_x = Math.round(event.pageX - $('#img-source').offset().left);
+            window.current_y = Math.round(event.pageY - $('#img-source').offset().top);
+            window.current_coords = '(' + window.current_x + ', ' + window.current_y + ')';
+        }).click( function() {
+            $('#coords_x').val(window.current_x);
+            $('#coords_y').val(window.current_y);
+
+            if($("#point").length){
+                $('#point').remove();
+            }
+
+            $('#image_wrapper').append("<span></span>");
+            $('span').attr("id", "point");
+            $('span').addClass("point-custom");
+            $('span').css({"top": window.current_y + "px", "left": window.current_x + "px"});
+        });
+
+        function  validateURL() {
+            if(document.forms['img-url'].image_url.value == ""){
+                alert("Please input url image.")
+                return false
+            }
+        }
+
+        function validateCoordX() {
+            if(document.forms['coord_xy'].coords_x.value == ""){
+                alert("Please marking point on image")
+                return false
+            }
+        }
+    </script>
   </body>
-  <script>
-      $('#img-source').mousemove(function(event) {
-          window.current_x = Math.round(event.pageX - $('#img-source').offset().left);
-          window.current_y = Math.round(event.pageY - $('#img-source').offset().top);
-          window.current_coords = '(' + window.current_x + ', ' + window.current_y + ')';
-      }).click( function() {
-          $('#coords_x').val(window.current_x);
-          $('#coords_y').val(window.current_y);
-
-          if($("#point").length){
-             $('#point').remove();
-          }
-
-          $('#image_wrapper').append("<span></span>");
-          $('span').attr("id", "point");
-          $('span').addClass("point-custom");
-          $('span').css({"top": window.current_y + "px", "left": window.current_x + "px"});
-      });
-
-      $(document).ready(function(){
-          $(window).resize(function(){
-              var img = document.getElementById('img-source');
-              var width = img.width;
-              var height = img.height;
-          })
-      })
-  </script>
 </html>
