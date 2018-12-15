@@ -111,7 +111,7 @@ class FaceController < ApplicationController
         end
       end
     elsif (diff_degree[2] - diff_degree[4]).abs <= 4 || (diff_degree[1] - diff_degree[5]).abs <= 4
-      if wide/long < 0.75
+      if wide_f/long_f < 0.75
         format_face = "oval"
       else
         format_face = "circle"

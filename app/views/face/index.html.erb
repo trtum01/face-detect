@@ -1,35 +1,39 @@
-<div class="header-custom">Face Recognize : ใช่หรือเปล่า?</div>
+<div class="header-custom">Personality Analysis using Face Detection</div>
 
-<!--Chaeyon-->
-<%= form_tag("/face", class: "image-detect", method: "get") do %>
-  <%= label_tag(:image_url, "ขั้นที่ 1 ภาพทดสอบ") %>
-  <%= text_field_tag(:image_url, @image_source, size: 100, class: "image-detect") %>
-  <%= submit_tag("Detect") %>
+<%= form_tag("/face", class: "row input-wrapper image-detect", method: "get") do %>
+  <%= label_tag(:image_url, "Input URL", class: "col-md-2 input-text") %>
+  <%= text_field_tag(:image_url, @image_source, size: 50, class: "col-md-8 input-bar") %>
+  <%= submit_tag("Check", class: "col-md-2 check-btn") %>
 <% end %>
 
-<% if @image_source %>
-  <br><div id="image_wrapper" class="image_wrapper">
-    <%= image_tag(@image_source, id: 'img-source') %>
-  </div>
-  <%= form_tag("/face", class: "image-detect", method: "get") do %>
-    <%= hidden_field_tag :image_url, @image_source %>
-    <%= hidden_field_tag :coords_x, @headbuttx %>
-    <%= hidden_field_tag :coords_y, @headbutty %>
-    <%= submit_tag("Recognize") %>
-  <% end %>
-<% end %>
-
-<% if @image_source && @headbuttx && @headbutty %>
-  <div id="image_wrapper" class="image_wrapper">
-    <%= image_tag(@image_source, id: 'img-source') %>
-      <div class="paint_points">
-        <% @face_shape.each do |position| %>
-          <%= content_tag(:span, nil, class: "point-custom", style: "top: #{position['y']/100*@face_size['height']}px; left: #{position['x']/100*@face_size['width']}px;") %>
-        <% end %>
+<div class="row set-img-wrapper">
+  <% if @image_source %>
+    <div class="col-md-4 box1-custom">
+      <div id="image_wrapper" class="image_wrapper">
+        <%= image_tag(@image_source, id: 'img-source', class: "img-responsive") %>
       </div>
-  </div>
-  <%# @result.each do |line| %>
-<!--    <%#= line %><br>-->
-  <%# end %>
-  <%= @result %>
-<% end %>
+      <%= form_tag("/face", class: "image-detect", method: "get") do %>
+        <%= hidden_field_tag :image_url, @image_source %>
+        <%= hidden_field_tag :coords_x, @headbuttx %>
+        <%= hidden_field_tag :coords_y, @headbutty %>
+        <%= submit_tag("Detect", class: "submit-btn") %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @image_source && @headbuttx && @headbutty %>
+    <div class="col-md-4 box1-custom">
+        <div id="image_wrapper" class="image_wrapper">
+          <%= image_tag(@image_source, id: 'img-source') %>
+          <div class="paint_points">
+            <% @face_shape.each do |position| %>
+              <%= content_tag(:span, nil, class: "point-custom", style: "top: #{position['y']}%; left: #{position['x']}%;") %>
+            <% end %>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-4 result-box">
+      <%= @result %>
+    </div>
+  <% end %>
+</div>

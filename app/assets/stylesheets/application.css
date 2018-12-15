@@ -20,6 +20,21 @@
     width: 100%;
 }
 
+.image_wrapper img {
+    width: 100%;
+}
+
+.input-text {
+    margin: auto;
+    text-align: center;
+    margin-bottom: 10px;
+    border: 3px solid orange;
+    border-radius: 5px;
+    background: #ffffe6;
+    color: darkgrey;
+    text-shadow: 1px 1px black;
+}
+
 .paint_points {
     position: absolute;
     top: 0;
@@ -46,14 +61,26 @@
     font-weight: bold;
     color: red;
     font-size: 40px;
+    margin-bottom: 25px;
+    border: 3px solid black;
+    background: lightgoldenrodyellow;
+    border-radius: 15px;
 }
 
 .image-detect {
     margin-top: 5px;
-    text-align: center;
     font-family: "TH Sarabun New";
     font-size: 28px;
+    text-align: center;
+    margin-right: 0px;
+    margin-left: 0px;
 }
+
+.input-wrapper {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
 .image-detect-train{
     margin-top: 5px;
     font-family: "TH Sarabun New";
@@ -74,6 +101,70 @@
     font-size: 32px;
 }
 
-.paint-wrapper {
+.set-img-wrapper {
+    font-family: "TH Sarabun New";
+    font-size: 24px;
+}
 
+.check-btn {
+    border: 4px solid lightblue;
+    background: powderblue;
+    color: white;
+    font-weight: bold;
+    text-shadow: 2px 2px black;
+    border-radius: 5px;
+}
+
+.check-btn:focus {
+    outline: 0px;
+}
+
+.check-btn:active {
+    outline: 0px;
+}
+
+.submit-btn {
+    margin-top: 10px;
+    background: mediumpurple;
+    border: 5px solid #b84dff;
+    border-radius: 10px;
+    color: white;
+    text-shadow: 2px 2px deeppink;
+}
+
+.submit-btn:focus {
+    outline: 0px
+}
+
+.input-bar {
+    border: 5px solid gray;
+    border-radius: 30px;
+    color: red;
+    background: ivory;
+    margin-bottom: 10px;
+}
+
+.input-bar:focus {
+    outline: 0px;
+    color: black;
+    background: white;
+}
+
+.result-box {
+    border: 4px solid #99ffff;
+    border-radius: 5px;
+    padding: 10px 10px;
+    background: #e6f7ff;
+    color: #663300;
+    font-weight: bold;
+    text-shadow: 2px 2px white;
+    margin-bottom: 20px;
+}
+
+.box1-custom {
+    margin-bottom: 20px;
+    border: 5px solid lightgreen;
+    border-radius: 5px;
+    padding: 10px;
+    background: #ccffcc;
 }
