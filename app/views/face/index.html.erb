@@ -2,18 +2,22 @@
 
 <%= form_tag("/face", id: "img-url", class: "row input-wrapper image-detect", method: "post") do %>
   <%= label_tag(:image_url, "Input URL", class: "col-md-2 input-text") %>
-  <%= text_field_tag(:image_url, @image_source, size: 50, class: "col-md-8 input-bar") %>
+  <%= text_field_tag(:image_url, @image_source, size: 50, class: "col-md-6 input-bar") %>
+  <%= hidden_field_tag :upload_path, @image_source_base %>
   <%= submit_tag("Check", class: "col-md-2 check-btn", onclick: "return validateURL();") %>
+  <%= submit_tag("Upload", type: "button", class: "col-md-2 check-btn", value:"Upload", onclick: "$(this).next().trigger('click')") %>
+  <%= file_field_tag(:upload, value: @image_source, class: "invisible btn-absolute") %>
 <% end %>
 
 <div class="row set-img-wrapper">
-  <% if @image_source %>
+  <% if @image_source || @image_source_base %>
     <div class="col-md-4 box1-custom">
       <div id="image_wrapper" class="image_wrapper">
-        <%= image_tag(@image_source, id: 'img-source', alt: "image-sample", class: "img-responsive") %>
+        <%= image_tag(@image_source || @image_source_base, id: 'img-source', alt: "image-sample", class: "img-responsive") %>
       </div>
       <%= form_tag("/face",id: "coord_xy", class: "image-detect", method: "post") do %>
         <%= hidden_field_tag :image_url, @image_source %>
+        <%= hidden_field_tag :upload_path, @image_source_base %>
         <%= hidden_field_tag :coords_x, @headbuttx %>
         <%= hidden_field_tag :coords_y, @headbutty %>
         <%= submit_tag("Detect", class: "submit-btn", onclick: "return validateCoordX();") %>
@@ -21,10 +25,10 @@
     </div>
   <% end %>
 
-  <% if @image_source && @headbuttx && @headbutty %>
+  <% if (@image_source || @image_source_base) && @headbuttx && @headbutty %>
     <div class="col-md-4 box1-custom">
         <div id="image_wrapper" class="image_wrapper">
-          <%= image_tag(@image_source, id: 'img-source', alt: "image-result", class: "img-responsive") %>
+          <%= image_tag(@image_source_base || @image_source, id: 'img-source', alt: "image-result", class: "img-responsive") %>
           <div class="paint_points">
             <% @face_shape.each do |position| %>
               <%= content_tag(:span, nil, class: "point-custom", style: "top: #{position['y']}%; left: #{position['x']}%;") %>

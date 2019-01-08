@@ -17,6 +17,19 @@
       <%= yield %>
     </div>
     <script>
+        function readFile() {
+            if (this.files && this.files[0]) {
+                var FR= new FileReader();
+                FR.addEventListener("load", function(e) {
+                    document.getElementById("upload_path").value = e.target.result;
+                    $("#img-url").submit();
+                });
+                FR.readAsDataURL( this.files[0] );
+            }
+        }
+
+        document.getElementById("upload").addEventListener("change", readFile);
+
         $('#img-source').mousemove(function(event) {
             window.current_x = Math.round(event.pageX - $('#img-source').offset().left);
             window.current_y = Math.round(event.pageY - $('#img-source').offset().top);
@@ -29,10 +42,8 @@
                 $('#point').remove();
             }
 
-            $('#image_wrapper').append("<span></span>");
-            $('span').attr("id", "point");
-            $('span').addClass("point-custom");
-            $('span').css({"top": window.current_y + "px", "left": window.current_x + "px"});
+            $('#image_wrapper').append("<span id='point' class='point-custom'></span>");
+            $('span#point').css({"top": window.current_y + "px", "left": window.current_x + "px"});
         });
 
         function  validateURL() {
