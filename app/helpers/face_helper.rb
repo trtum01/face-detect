@@ -6,7 +6,7 @@ module FaceHelper
         output_shape << position if position['id'].to_i <= 1040
       end
     rescue Exception
-      @error << face_detect_collection
+      @error = face_detect_collection
     end
     output_shape
   end
