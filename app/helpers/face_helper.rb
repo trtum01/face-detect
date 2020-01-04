@@ -1,8 +1,10 @@
 module FaceHelper
   def drawing_face(face_detect_collection)
     output_shape = []
-    face_detect_collection.each do |position|
-      output_shape << position if position['id'].to_i <= 1040
+    if face_detect_collection
+      face_detect_collection.each do |position|
+        output_shape << position if position['id'].to_i <= 1040
+      end
     end
     output_shape
   end
