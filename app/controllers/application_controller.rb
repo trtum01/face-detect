@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  include ApplicationHelper
 
   def face_status_points(image_source)
     begin
@@ -59,21 +60,4 @@ class ApplicationController < ActionController::Base
     end
     result
   end
-
-  private
-
-  def api_key_detect(image_source)
-    client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
-    original_output = client.faces_detect(urls: [image_source])
-  end
-
-  def api_key_train
-    client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
-  end
-
-  def api_key_recognize(image_source)
-    client = Face.get_client(api_key: FACE_API_KEY, api_secret: FACE_SECRET_KEY)
-    original_out = client.faces_recognize(uids: "pic1@testperson2", urls: [image_source])
-  end
-
 end
